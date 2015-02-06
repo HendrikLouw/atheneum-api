@@ -18,6 +18,7 @@ GEM
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     equalizer (0.0.9)
+    excon (0.44.1)
     grape (0.10.1)
       activesupport
       builder
@@ -31,6 +32,8 @@ GEM
     hashie (3.4.0)
     i18n (0.7.0)
     ice_nine (0.11.1)
+    jeff (1.2.0)
+      excon (>= 0.22.1)
     json (1.8.2)
     minitest (5.5.1)
     minitest-reporters (1.0.10)
@@ -49,6 +52,9 @@ GEM
     thread_safe (0.3.4)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    vacuum (1.2.0)
+      jeff (~> 1.0)
+      multi_xml (~> 0.5.0)
     virtus (1.0.4)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -61,3 +67,4 @@ PLATFORMS
 DEPENDENCIES
   grape (~> 0.10)
   minitest-reporters
+  vacuum
