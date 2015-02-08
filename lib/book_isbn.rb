@@ -15,6 +15,8 @@ class BookISBN
         'IdType' => ID_TYPE,
         'ItemId' => @isbn
       })
+
+    Book.new
   end
 
   private

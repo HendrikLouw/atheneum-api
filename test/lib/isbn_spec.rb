@@ -3,7 +3,7 @@ require 'test_helper'
 describe 'BookISBN' do
   before do
     @vacuum_mock = MiniTest::Mock.new
-    @vacuum_mock.expect :item_lookup, Book.new, [{
+    @vacuum_mock.expect :item_lookup, "<sample></sample>", [{
       query: {
         'SearchIndex' => BookISBN::SEARCH_INDEX,
         'IdType' => BookISBN::ID_TYPE,
