@@ -4,6 +4,6 @@ gem 'grape', '~>0.10'
 gem 'vacuum', '~>1.2.0'
 
 group :test do
-  gem 'minitest-reporters', group: :test
+  gem 'minitest-reporters'
+  gem 'mocha', '~>1.1.0'
 end
-
