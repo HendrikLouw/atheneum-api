@@ -1,11 +1,15 @@
+require 'vacuum'
+require 'json'
+require_relative './book'
+
 class BookISBN
   SEARCH_INDEX = 'Books'
   ID_TYPE = 'ISBN'
   ASSOCIATE_TAG='tag'
 
-  def initialize(params = {})
-    @isbn = params[:code]
-    @lookup_service = params[:lookup_service] || initialize_default_lookup_service
+  def initialize(code:, lookup_service: initialize_default_lookup_service)
+    @isbn = code
+    @lookup_service = lookup_service
   end
 
   def lookup
@@ -16,7 +20,8 @@ class BookISBN
         'ItemId' => @isbn
       })
 
-    Book.new
+    body = raw_product_lookup_response.to_h
+    Book.from_xml xml_string: body
   end
 
   private
@@ -26,3 +31,7 @@ class BookISBN
     lookup_service
   end
 end
+
+
+book_isbn = BookISBN.new code: '020161622X'
+book_isbn.lookup

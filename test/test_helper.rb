@@ -3,7 +3,7 @@ require 'minitest/autorun'
 
 require 'mocha/mini_test'
 
-require 'vacuum'
+require 'json'
 require './lib/book_isbn'
 require './lib/book'
 reporter_options = { color: true }

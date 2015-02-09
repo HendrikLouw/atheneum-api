@@ -68,6 +68,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport (~> 4.2.0)
   grape (~> 0.10)
   minitest-reporters
   mocha (~> 1.1.0)
