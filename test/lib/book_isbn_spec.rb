@@ -1,6 +1,8 @@
 require 'test_helper'
 
-describe 'BookISBN' do
+include Atheneum::Domain
+
+describe Atheneum::Domain::BookISBN do
   before do
     json_file = File.join(File.expand_path(File.dirname(__FILE__)), 'item_lookup.json')
     sample_json = File.read(json_file)
@@ -31,6 +33,8 @@ describe 'BookISBN' do
     book = book_isbn.lookup
     book.must_be_instance_of Book
     book.title.must_equal 'The Pragmatic Programmer: From Journeyman to Master'
+    book.author.must_equal 'Andrew Hunt, David Thomas'
+    book.publisher.must_equal 'Addison-Wesley Professional'
 
     @vacuum_mock.verify
   end

@@ -4,8 +4,8 @@ require 'minitest/autorun'
 require 'mocha/mini_test'
 
 require 'json'
-require './lib/book_isbn'
-require './lib/book'
+require './domain/book_isbn'
+require './domain/book'
 reporter_options = { color: true }
 Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(reporter_options)]
 
