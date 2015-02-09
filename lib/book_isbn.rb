@@ -21,7 +21,7 @@ class BookISBN
       })
 
     body = raw_product_lookup_response.to_h
-    Book.from_xml xml_string: body
+    Book.from_hash body
   end
 
   private
