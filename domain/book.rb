@@ -1,4 +1,3 @@
-require 'active_support/core_ext/hash/conversions'
 module Atheneum
   module Domain
     class Book
