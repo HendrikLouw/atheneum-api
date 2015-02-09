@@ -7,4 +7,5 @@ gem 'activesupport', '~> 4.2.0'
 group :test do
   gem 'minitest-reporters'
   gem 'mocha', '~>1.1.0'
+  gem "rack-test"
 end

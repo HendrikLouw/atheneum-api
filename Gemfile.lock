@@ -51,6 +51,8 @@ GEM
       rack (>= 0.4)
     rack-mount (0.8.3)
       rack (>= 1.0.0)
+    rack-test (0.6.3)
+      rack (>= 1.0)
     ruby-progressbar (1.7.1)
     thread_safe (0.3.4)
     tzinfo (1.2.2)
@@ -72,4 +74,5 @@ DEPENDENCIES
   grape (~> 0.10)
   minitest-reporters
   mocha (~> 1.1.0)
+  rack-test
   vacuum (~> 1.2.0)

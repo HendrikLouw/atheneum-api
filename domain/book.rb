@@ -19,6 +19,15 @@ module Atheneum
         @author = author.join(', ')
         @publisher = publisher
       end
+
+
+      def to_h
+        {
+          title: @title,
+          author: @author,
+          publisher: @publisher
+        }
+      end
     end
   end
 end

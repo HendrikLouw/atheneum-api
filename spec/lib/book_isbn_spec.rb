@@ -1,4 +1,4 @@
-require 'test_helper'
+require_relative '../spec_helper'
 
 include Atheneum::Domain
 
@@ -25,8 +25,8 @@ describe Atheneum::Domain::BookISBN do
         'ItemId' => '020161622X'
       }
     }]
-
   end
+
   let (:book_isbn) { @book_isbn = BookISBN.new code: '020161622X', lookup_service: @vacuum_mock }
 
   it 'should lookup a book by ISBN code' do
