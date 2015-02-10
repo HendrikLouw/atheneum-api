@@ -1,7 +1,3 @@
-require 'vacuum'
-require 'json'
-require_relative './book'
-
 module Atheneum
   module Domain
     class BookISBN
