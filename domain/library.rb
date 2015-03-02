@@ -11,12 +11,16 @@ module Atheneum
 
       def check_in book:
         @checked_in_books << book
+        book
       end
 
       def check_out isbn:
         book = @checked_in_books.bsearch { |book| book.isbn == isbn }
+        return nil if !checked_in?(book)
+
         @checked_in_books.delete( book )
         @checked_out_books << book
+        book
       end
 
       def checked_in?(book)
