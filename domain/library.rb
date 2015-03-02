@@ -15,10 +15,10 @@ module Atheneum
       end
 
       def check_out isbn:
-        book = @checked_in_books.bsearch { |book| book.isbn == isbn }
-        return nil if !checked_in?(book)
+        book = search_by_isbn isbn
+        return nil if !checked_in? book
 
-        @checked_in_books.delete( book )
+        @checked_in_books.delete book
         @checked_out_books << book
         book
       end
@@ -29,6 +29,11 @@ module Atheneum
 
       def checked_out?(book)
         @checked_out_books.include?(book)
+      end
+
+      private
+      def search_by_isbn(isbn)
+        @checked_in_books.bsearch { |book| book.isbn == isbn }
       end
     end
   end
