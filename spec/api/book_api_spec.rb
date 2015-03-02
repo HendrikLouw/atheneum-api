@@ -12,7 +12,8 @@ describe Atheneum::API::BookAPI do
       expected_book = {
         "title"=>"The Pragmatic Programmer: From Journeyman to Master",
         "author"=>"Andrew Hunt, David Thomas",
-        "publisher"=>"Addison-Wesley Professional"
+        "publisher"=>"Addison-Wesley Professional",
+        "isbn"=>"020161622X"
       }
       get "/v1/book/020161622X/lookup"
       last_response.status.must_equal 200

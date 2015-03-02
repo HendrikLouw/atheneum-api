@@ -35,6 +35,7 @@ describe Atheneum::Domain::BookISBN do
     book.title.must_equal 'The Pragmatic Programmer: From Journeyman to Master'
     book.author.must_equal 'Andrew Hunt, David Thomas'
     book.publisher.must_equal 'Addison-Wesley Professional'
+    book.isbn.must_equal '020161622X'
 
     @vacuum_mock.verify
   end
