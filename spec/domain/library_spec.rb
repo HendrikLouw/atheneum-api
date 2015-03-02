@@ -14,12 +14,15 @@ describe Atheneum::Domain::Library do
 
   it 'should check in a new book' do
     library.check_in book: book
-    library.books.size.must_equal 1
+    library.checked_in_books.size.must_equal 1
+    library.checked_in?(book).must_equal true
   end
 
   it 'should check out a book via isbn code' do
     library.check_in book: book
     library.check_out isbn: '020161622X'
-    library.books.size.must_equal 0
+    library.checked_in_books.size.must_equal 0
+    library.checked_out_books.size.must_equal 1
+    library.checked_out?(book).must_equal true
   end
 end
