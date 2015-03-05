@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 
 gem 'grape', '~>0.10'
 gem 'vacuum', '~>1.2.0'
-gem 'redis', '~> 3.0.1'
+gem 'mongo', '~>1.12.0'
+gem 'bson_ext', '~>1.12.0'
 
 group :test do
   gem 'minitest-reporters'
