@@ -53,6 +53,7 @@ GEM
       rack (>= 1.0.0)
     rack-test (0.6.3)
       rack (>= 1.0)
+    redis (3.0.7)
     ruby-progressbar (1.7.1)
     thread_safe (0.3.4)
     tzinfo (1.2.2)
@@ -70,9 +71,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (~> 4.2.0)
   grape (~> 0.10)
   minitest-reporters
   mocha (~> 1.1.0)
   rack-test
+  redis (~> 3.0.1)
   vacuum (~> 1.2.0)
