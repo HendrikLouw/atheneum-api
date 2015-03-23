@@ -1,0 +1,49 @@
+---
+- include: rbenv/main.yml
+- hosts: all
+  remote_user: root
+  vars:
+    app_folder: /root/atheneum-api
+    repo: git@git.killerco.de:hendrik/atheneum-api.git
+    env:
+      RAILS_ENV: production
+      PATH: "{{app_folder}}"
+
+  tasks:
+    - name: Add Phusion passenger apt server key
+      apt_key: keyserver=keyserver.ubuntu.com id=561F9B9CAC40B2F7
+
+    - name: Install Phusion passenger dependencies
+      apt: pkg={{ item }} state=latest install_recommends=yes update_cache=yes
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+        - nginx
+
+    - name: Add Phusion passenger to apt sources
+      apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger trusty main' state=present
+
+    - name: Install Phusion passenger
+      apt: pkg=passenger state=latest install_recommends=yes update_cache=yes
+
+    - name: Install Bundler gem
+      gem: name=bundler state=latest
+
+    - name: Rbenv rehash so bundle command works
+      command: rbenv rehash
+
+    - name: Bundle install
+      command: "/usr/local/rbenv/shims/bundle install"
+      args:
+        chdir: /root/atheneum-api
+
+    - name: Rbenv rehash so bundle install binaries are runnable
+      command: rbenv rehash
+
+
+# TODO:
+# Setup nginx to run with passenger
+# Set up AWS keys
+
+# Setup api.athenuem.io
+# Setup atheneum.io / www.atheneum.io
