@@ -13,7 +13,10 @@ describe Atheneum::API::BookAPI do
         "title"=>"The Pragmatic Programmer: From Journeyman to Master",
         "author"=>"Andrew Hunt, David Thomas",
         "publisher"=>"Addison-Wesley Professional",
-        "isbn"=>"020161622X"
+        "isbn"=>"020161622X",
+        "small_image"=>"http://ecx.images-amazon.com/images/I/41BKx1AxQWL._SL75_.jpg",
+        "medium_image"=>"http://ecx.images-amazon.com/images/I/41BKx1AxQWL._SL160_.jpg",
+        "large_image"=>"http://ecx.images-amazon.com/images/I/41BKx1AxQWL.jpg"
       }
       get "/v1/book/020161622X/lookup"
       last_response.status.must_equal 200

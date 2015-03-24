@@ -15,7 +15,8 @@ module Atheneum
           query: {
             'SearchIndex' => SEARCH_INDEX,
             'IdType' => ID_TYPE,
-            'ItemId' => @isbn
+            'ItemId' => @isbn,
+            'ResponseGroup' => 'Small, Images'
           })
 
         Book.from_hash raw_product_lookup_response.to_h
