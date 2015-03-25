@@ -19,7 +19,7 @@ module Atheneum
             'ResponseGroup' => 'Small, Images'
           })
 
-        Book.from_hash raw_product_lookup_response.to_h
+        Atheneum::Model::Book.from_hash raw_product_lookup_response.to_h
       end
 
       private
