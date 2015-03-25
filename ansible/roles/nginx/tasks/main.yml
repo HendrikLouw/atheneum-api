@@ -1,0 +1,6 @@
+---
+- name: Remove apache2
+  apt: name=apache2 state=absent
+
+- name: Install nginx
+  apt: pkg=nginx state=latest install_recommends=yes update_cache=yes
