@@ -9,6 +9,6 @@ require_relative './model/book'
 require_relative './domain/book_isbn'
 require_relative './domain/library'
 
-require_relative './api/book_api'
+require_relative  './api/book_api'
 
-Mongoid.load!("config/mongoid.yml")
+Mongoid.load!(File.dirname(__FILE__) + '/config/mongoid.yml')

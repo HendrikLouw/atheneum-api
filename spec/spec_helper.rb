@@ -1,3 +1,5 @@
+ENV['MONGOID_ENV'] = "test"
+
 require 'minitest/reporters'
 require 'minitest/autorun'
 
@@ -10,6 +12,7 @@ require 'json'
 require_relative '../atheneum'
 
 reporter_options = { color: true }
+
 Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(reporter_options)]
 
 
