@@ -1,12 +1,11 @@
 ---
 - hosts: api-servers
-  remote_user: root
+  remote_user: atheneum
   vars:
     deploy_user: atheneum
     deploy_group: atheneum
   roles:
     - base
-    - deploy-user
     - git
     - nginx
     - rbenv
@@ -15,18 +14,14 @@
     - atheneum-api
 
 # TODO:
-# Setup deploy user
-# Install ruby for deploy user
 # Setup NTP
 
-# Setup nginx
 # Setup Passenger
 # Setup api.athenuem.io
 # Setup atheneum.io / www.atheneum.io
 
 # Setup nginx to run with passenger on api.atheneum.io
 # Set up AWS keys
-
 # Setup mongoDB
 
 # Setup log rotate for
