@@ -7,9 +7,8 @@
   roles:
     - base
     - git
-    - nginx
     - rbenv
-    - passenger
+    - passenger-nginx
     - mongodb
     - atheneum-api
 
