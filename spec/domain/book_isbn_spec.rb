@@ -1,46 +1,29 @@
-require_relative '../spec_helper'
-
 include Atheneum::Domain
 
-describe Atheneum::Domain::BookISBN do
+RSpec.describe Atheneum::Domain::BookISBN do
   before do
     json_file = File.join(File.expand_path(File.dirname(__FILE__)), 'item_lookup.json')
     sample_json = File.read(json_file)
 
-    class FakeLookup
-      def initialize(json)
-        @json = json
-      end
+    excon_response = double("lookup_service")
+    expected_response = JSON.parse sample_json
+    allow(excon_response).to receive(:to_h).and_return(expected_response)
 
-      def to_h
-        JSON.parse @json
-      end
-    end
-
-    @vacuum_mock = MiniTest::Mock.new
-    @vacuum_mock.expect :item_lookup, FakeLookup.new(sample_json), [{
-      query: {
-        'SearchIndex' => BookISBN::SEARCH_INDEX,
-        'IdType' => BookISBN::ID_TYPE,
-        'ItemId' => '020161622X',
-        'ResponseGroup'=>'Small, Images'
-      }
-    }]
+    @vacuum_mock = double('vacuum')
+    allow(@vacuum_mock).to receive(:item_lookup).and_return(excon_response)
   end
 
   let (:book_isbn) { @book_isbn = BookISBN.new code: '020161622X', lookup_service: @vacuum_mock }
 
   it 'should lookup a book by ISBN code' do
     book = book_isbn.lookup
-    book.must_be_instance_of Book
-    book.title.must_equal 'The Pragmatic Programmer: From Journeyman to Master'
-    book.author.must_equal 'Andrew Hunt, David Thomas'
-    book.publisher.must_equal 'Addison-Wesley Professional'
-    book.small_image.must_equal 'http://ecx.images-amazon.com/images/I/41BKx1AxQWL._SL75_.jpg'
-    book.medium_image.must_equal 'http://ecx.images-amazon.com/images/I/41BKx1AxQWL._SL160_.jpg'
-    book.large_image.must_equal 'http://ecx.images-amazon.com/images/I/41BKx1AxQWL.jpg'
-    book.isbn.must_equal '020161622X'
-
-    @vacuum_mock.verify
+    expect(book).to be_a(Book)
+    expect(book.title).to eq('The Pragmatic Programmer: From Journeyman to Master')
+    expect(book.author).to eq('Andrew Hunt, David Thomas')
+    expect(book.publisher).to eq('Addison-Wesley Professional')
+    expect(book.small_image).to eq('http://ecx.images-amazon.com/images/I/41BKx1AxQWL._SL75_.jpg')
+    expect(book.medium_image).to eq('http://ecx.images-amazon.com/images/I/41BKx1AxQWL._SL160_.jpg')
+    expect(book.large_image).to eq('http://ecx.images-amazon.com/images/I/41BKx1AxQWL.jpg')
+    expect(book.isbn).to eq('020161622X')
   end
 end

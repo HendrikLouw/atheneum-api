@@ -1,8 +1,7 @@
-require_relative '../spec_helper'
 include Atheneum::Domain
 
-describe Atheneum::Domain::Library do
-  describe 'An empty library' do
+RSpec.describe Atheneum::Domain::Library do
+  context 'An empty library' do
     let(:library) do
       Library.new
     end
