@@ -11,8 +11,12 @@ module Atheneum
         @checked_in_books << book
       end
 
-      def checked_in_books
-        @checked_in_books
+      def checked_in?(book)
+        @checked_in_books.include? book
+      end
+
+      def checked_in_book_count
+        @checked_in_books.size
       end
     end
   end

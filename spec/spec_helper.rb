@@ -34,7 +34,10 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = :random
 
-
   Kernel.srand config.seed
 
+  # Clean up mongodb
+  config.before :each do
+    Mongoid.default_session.collections.select {|c| c.name !~ /system/ }.each(&:drop)
+  end
 end
