@@ -1,6 +1,7 @@
 ENV['MONGOID_ENV'] = "test"
 require 'rack/test'
 require 'json'
+require 'vcr'
 require_relative '../atheneum'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
@@ -39,5 +40,10 @@ RSpec.configure do |config|
   # Clean up mongodb
   config.before :each do
     Mongoid.default_session.collections.select {|c| c.name !~ /system/ }.each(&:drop)
+  end
+
+  VCR.configure do |config|
+    config.cassette_library_dir = "fixtures/vcr_cassettes"
+    config.hook_into :webmock # or :fakeweb
   end
 end

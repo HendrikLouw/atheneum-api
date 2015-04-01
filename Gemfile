@@ -7,6 +7,8 @@ gem "mongoid", "~> 4.0.0"
 group :test do
   gem 'rspec'
   gem 'rspec-mocks'
+  gem 'vcr'
+  gem 'webmock'
   gem 'mocha', '~>1.1.0'
   gem 'rack-test'
 end
