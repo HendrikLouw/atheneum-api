@@ -7,8 +7,17 @@ module Atheneum
       end
 
       def add(book)
-        book.save
         @checked_in_books << book
+        book.save
+      end
+
+      def checkout(book)
+        if checked_in?(book)
+          @checked_in_books.delete(book)
+          true
+        else
+          false
+        end
       end
 
       def checked_in?(book)
