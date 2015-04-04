@@ -1,6 +1,6 @@
-include Atheneum::Domain
+include Atheneum::Model
 
-RSpec.describe Atheneum::Domain::Library do
+RSpec.describe Atheneum::Model::Library do
   let(:library) do
     Library.new
   end
@@ -20,11 +20,13 @@ RSpec.describe Atheneum::Domain::Library do
         expect(library.checked_in?(book)).to be(true)
         expect(library.checked_in_book_count).to eq(1)
         expect(Book.count).to eq(1)
+        expect(book.library).to eq(library)
 
         library.add book2
         expect(library.checked_in?(book)).to be true
         expect(library.checked_in_book_count).to eq(2)
         expect(Book.count).to eq(2)
+        expect(book2.library).to eq(library)
       end
 
       it 'should not allow checking out a book that does not exist' do
@@ -39,7 +41,7 @@ RSpec.describe Atheneum::Domain::Library do
       library.add(book2)
     end
 
-    it 'should checkout an existing books' do
+    it 'should checkout existing books' do
       expect(library.checkout(book)).to be true
       expect(library.checked_in?(book)).to be false
       expect(library.checked_in_book_count).to be 1

@@ -1,6 +1,6 @@
 include Atheneum::Domain
 
-RSpec.describe Atheneum::Domain::BookISBN do
+RSpec.describe Atheneum::Domain::BookLookup do
   before do
     json_file = File.join(File.expand_path(File.dirname(__FILE__)), 'item_lookup.json')
     sample_json = File.read(json_file)
@@ -13,7 +13,7 @@ RSpec.describe Atheneum::Domain::BookISBN do
     allow(@vacuum_mock).to receive(:item_lookup).and_return(excon_response)
   end
 
-  let (:book_isbn) { @book_isbn = BookISBN.new code: '020161622X', lookup_service: @vacuum_mock }
+  let (:book_isbn) { @book_isbn = BookLookup.new code: '020161622X', lookup_service: @vacuum_mock }
 
   it 'should lookup a book by ISBN code' do
     book = book_isbn.lookup
