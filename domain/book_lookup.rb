@@ -1,12 +1,12 @@
 module Atheneum
   module Domain
-    class BookISBN
+    class BookLookup
       SEARCH_INDEX = 'Books'
       ID_TYPE = 'ISBN'
       ASSOCIATE_TAG='tag'
 
-      def initialize(code:, lookup_service: initialize_default_lookup_service)
-        @isbn = code
+      def initialize(isbn_code:, lookup_service: initialize_default_lookup_service)
+        @isbn = isbn_code
         @lookup_service = lookup_service
       end
 

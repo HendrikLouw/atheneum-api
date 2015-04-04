@@ -9,6 +9,37 @@ module Atheneum
       field :small_image, :type => String
       field :medium_image, :type => String
       field :large_image, :type => String
+      field :status, :type => String
+      belongs_to :library
+
+
+      def checked_in?
+        self.status == "checked_in"
+      end
+
+      def check_in(library: )
+        self.library = library
+        self.status = "checked_in"
+      end
+
+      def check_in!(library: )
+        self.check_in(library: library)
+        self.save!
+      end
+
+      def checked_out?
+        self.status == "checked_out"
+      end
+
+      def check_out(library: )
+        self.library = library
+        self.status = "checkout"
+      end
+
+      def check_out!(library: )
+        self.check_out(library: library)
+        self.save!
+      end
 
       def Book.from_excon_response(response)
         Book.from_hash(response.to_h)

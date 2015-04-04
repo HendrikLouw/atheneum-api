@@ -2,7 +2,10 @@ include Atheneum::Model
 
 RSpec.describe Atheneum::Model::Library do
   let(:library) do
-    Library.new
+    library = Library.new
+    library.name = "ThoughtWorks JHB"
+    library.save
+    library
   end
   let(:book) { Book.new :title => "The Pragmatic Programmer: From Journeyman to Master",
                         :author => "Andrew Hunt",
@@ -44,11 +47,11 @@ RSpec.describe Atheneum::Model::Library do
     it 'should checkout existing books' do
       expect(library.checkout(book)).to be true
       expect(library.checked_in?(book)).to be false
-      expect(library.checked_in_book_count).to be 1
+      expect(library.checked_in_book_count).to eq 1
 
       expect(library.checkout(book2)).to be true
       expect(library.checked_in?(book2)).to be false
-      expect(library.checked_in_book_count).to be 0
+      expect(library.checked_in_book_count).to eq 0
     end
   end
 end

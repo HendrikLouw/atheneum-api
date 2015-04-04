@@ -1,5 +1,5 @@
 require 'grape'
-require_relative '../domain/book_isbn'
+require_relative '../domain/book_lookup'
 
 module Atheneum
   module API
@@ -11,7 +11,7 @@ module Atheneum
       namespace :book do
         route_param :isbn_code do
           get :lookup do
-            book_isbn = Atheneum::Domain::BookISBN.new code: params[:isbn_code]
+            book_isbn = Atheneum::Domain::BookLookup.new isbn_code: params[:isbn_code]
             book_isbn.lookup.to_h
           end
         end

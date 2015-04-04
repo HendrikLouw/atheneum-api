@@ -5,7 +5,7 @@ RSpec.describe Atheneum::API::BookAPI do
     Atheneum::API::BookAPI
   end
 
-  context "GET /v1/book/lookup" do
+  context "GET /v1/book/{isbn_code}/lookup" do
     it "a book from supplied ISBN code" do
       expected_book = {
           "title" => "The Pragmatic Programmer: From Journeyman to Master",
@@ -24,4 +24,38 @@ RSpec.describe Atheneum::API::BookAPI do
       end
     end
   end
+
+  # context "POST /v1/book/{isbn_code}/scan" do
+  #
+  #   context "Scanned book not in the library" do
+  #     context "No books in the users bookshelf" do
+  #       it "should check in a new book to the library" do
+  #         pending "A bookshelf"
+  #       end
+  #
+  #       context "Scanned book is in the user's bookshelf" do
+  #         it "should check in an existing book to the library" do
+  #           pending "A bookshelf"
+  #         end
+  #       end
+  #     end
+  #   end
+  #
+  #
+  #   context "Scanned book in the library" do
+  #     context "No books in the users bookshelf" do
+  #       it "should check out the book form the library and add it to the user's bookshelf" do
+  #         pending "A bookshelf"
+  #       end
+  #
+  #     end
+  #
+  #     context "Scanned Book in the users bookshelf" do
+  #       it "should check in the scanned book to the library" do
+  #         pending "A bookshelf"
+  #       end
+  #     end
+  #   end
+
+  # end
 end
