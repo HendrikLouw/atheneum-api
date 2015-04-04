@@ -17,7 +17,7 @@ RSpec.describe Atheneum::API::BookAPI do
           "large_image" => "http://ecx.images-amazon.com/images/I/41BKx1AxQWL.jpg"
       }
 
-      VCR.use_cassette("lookup020161622", :match_requests_on => [:method, :path, :host ]) do
+      VCR.use_cassette("lookup020161622X", :match_requests_on => [:method, :path, :host]) do
         get "/v1/book/020161622X/lookup"
         expect(last_response.status).to eq(200)
         expect(JSON.parse(last_response.body)).to eq(expected_book)
@@ -25,37 +25,20 @@ RSpec.describe Atheneum::API::BookAPI do
     end
   end
 
-  # context "POST /v1/book/{isbn_code}/scan" do
-  #
-  #   context "Scanned book not in the library" do
-  #     context "No books in the users bookshelf" do
-  #       it "should check in a new book to the library" do
-  #         pending "A bookshelf"
-  #       end
-  #
-  #       context "Scanned book is in the user's bookshelf" do
-  #         it "should check in an existing book to the library" do
-  #           pending "A bookshelf"
-  #         end
-  #       end
-  #     end
-  #   end
-  #
-  #
-  #   context "Scanned book in the library" do
-  #     context "No books in the users bookshelf" do
-  #       it "should check out the book form the library and add it to the user's bookshelf" do
-  #         pending "A bookshelf"
-  #       end
-  #
-  #     end
-  #
-  #     context "Scanned Book in the users bookshelf" do
-  #       it "should check in the scanned book to the library" do
-  #         pending "A bookshelf"
-  #       end
-  #     end
-  #   end
+  context "POST /v1/book/{isbn_code}/scan" do
+    let(:book) { Book.new :title => "The Pragmatic Programmer: From Journeyman to Master",
+                          :author => "Andrew Hunt",
+                          :publisher => "Addison-Wesley Professional",
+                          :isbn => "020161622X" }
 
-  # end
+    it "should check in a new book to the library" do
+      VCR.use_cassette("scan020161622X", :match_requests_on => [:method, :path, :host]) do
+        library = Library.create!(:name => "Test library")
+        user = User.create!
+        bookshelf = Bookshelf.create!(:user => user)
+        post '/v1/book/020161622X/scan', {:user_id => user.id, :library_id => library.id}
+        expect(last_response.status).to eq(201)
+      end
+    end
+  end
 end

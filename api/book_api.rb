@@ -11,8 +11,15 @@ module Atheneum
       namespace :book do
         route_param :isbn_code do
           get :lookup do
-            book_isbn = Atheneum::Domain::BookLookup.new isbn_code: params[:isbn_code]
-            book_isbn.lookup.to_h
+            book = Atheneum::Domain::BookLookup.new isbn_code: params[:isbn_code]
+            book.lookup.to_h
+          end
+
+          post :scan do
+            user = Atheneum::Model::User.find(params[:user_id])
+            book = Atheneum::Domain::BookLookup.new(isbn_code: params[:isbn_code]).lookup
+            library = Atheneum::Model::Library.find(params[:library_id])
+            user.bookshelf.scan(book: book, library: library)
           end
         end
       end
