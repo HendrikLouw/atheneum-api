@@ -1,6 +1,10 @@
 module Atheneum
   module Model
     class Book
+      CHECKED_IN = "checked_in"
+      CHECKED_OUT = "checked_out"
+
+
       include Mongoid::Document
       field :title, :type => String
       field :isbn, :type => String
@@ -12,6 +16,8 @@ module Atheneum
       field :status, :type => String
       belongs_to :library
 
+      scope :checked_in, -> { where(status: Book::CHECKED_IN) }
+
 
       def checked_in?
         self.status == "checked_in"
@@ -19,7 +25,7 @@ module Atheneum
 
       def check_in(library: )
         self.library = library
-        self.status = "checked_in"
+        self.status = Book::CHECKED_IN
       end
 
       def check_in!(library: )
@@ -28,12 +34,12 @@ module Atheneum
       end
 
       def checked_out?
-        self.status == "checked_out"
+        self.status == Book::CHECKED_OUT
       end
 
       def check_out(library: )
         self.library = library
-        self.status = "checkout"
+        self.status = Book::CHECKED_OUT
       end
 
       def check_out!(library: )

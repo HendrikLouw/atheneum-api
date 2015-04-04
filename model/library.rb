@@ -23,7 +23,7 @@ module Atheneum
       end
 
       def checked_in_book_count
-        self.books.where(status: "checked_in", library: self).count()
+        self.books.checked_in.count()
       end
 
       def to_h
