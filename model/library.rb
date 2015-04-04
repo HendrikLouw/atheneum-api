@@ -5,13 +5,14 @@ module Atheneum
       field :name, :type => String
       has_many :books
 
-      def add(book)
-        book.check_in!(library: self)
+      def check_in(book)
+        self.books << book
+        book.check_in!
       end
 
-      def checkout(book)
+      def check_out(book)
         if checked_in?(book)
-          book.check_out!(library: self)
+          book.check_out!
           true
         else
           false
@@ -20,6 +21,10 @@ module Atheneum
 
       def checked_in?(book)
         book.library == self && book.checked_in?
+      end
+
+      def checked_out?(book)
+        book.library == self && book.checked_out?
       end
 
       def checked_in_book_count
