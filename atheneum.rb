@@ -14,3 +14,11 @@ require_relative './domain/book_lookup'
 require_relative  './api/book_api'
 
 Mongoid.load!(File.dirname(__FILE__) + '/config/mongoid.yml')
+
+if ENV["SEEDME"]
+  library = Atheneum::Model::Library.create!(:name => "Test library")
+  user = Atheneum::Model::User.create!
+  bookshelf = Atheneum::Model::Bookshelf.create!(:user => user)
+  puts library.id
+  puts user.id
+end

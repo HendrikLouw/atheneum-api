@@ -13,7 +13,7 @@ RSpec.describe Atheneum::Domain::BookLookup do
     allow(@vacuum_mock).to receive(:item_lookup).and_return(excon_response)
   end
 
-  let (:book_lookup) { @book_isbn = BookLookup.new isbn_code: '020161622X', lookup_service: @vacuum_mock }
+  let (:book_lookup) { @book_isbn = BookLookup.new isbn: '020161622X', lookup_service: @vacuum_mock }
 
   it 'should lookup a book by ISBN code' do
     book = book_lookup.lookup

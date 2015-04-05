@@ -19,38 +19,32 @@ RSpec.describe Atheneum::Model::Library do
   context 'An empty library' do
     context 'Add a new book to the library' do
       it 'should add new books to the library checked in books' do
-        expect(library.check_in(book: book)).to be(true)
-        expect(library.checked_in?(book: book)).to be(true)
-        expect(library.checked_in_book_count).to eq(1)
-        expect(Book.count).to eq(1)
-        expect(book.library).to eq(library)
+        VCR.use_cassette("library_check_in", :match_requests_on => [:method, :path, :host]) do
+          expect(library.check_in(isbn: book.isbn)).to be(true)
+          expect(library.checked_in?(isbn: book.isbn)).to be(true)
+          expect(library.checked_in_book_count).to eq(1)
+          expect(Book.count).to eq(1)
 
-        library.check_in( book: book2 )
-        expect(library.checked_in?(book: book)).to be true
-        expect(library.checked_in_book_count).to eq(2)
-        expect(Book.count).to eq(2)
-        expect(book2.library).to eq(library)
+          expect(Book.find_by_isbn(book.isbn).first().library).to eq(library)
+        end
       end
 
       it 'should not allow checking out a book that does not exist' do
-        expect(library.check_out(book: book)).to be(false)
+        expect(library.check_out(isbn: book.isbn)).to be(false)
       end
     end
   end
 
   context 'Library with existing books' do
     before do
-      library.check_in(book: book)
-      library.check_in(book: book2)
+      VCR.use_cassette("library_existing_books", :match_requests_on => [:method, :path, :host]) do
+        library.check_in(isbn: book.isbn)
+      end
     end
 
     it 'should checkout existing books' do
-      expect(library.check_out(book: book)).to be true
-      expect(library.checked_in?(book: book)).to be false
-      expect(library.checked_in_book_count).to eq 1
-
-      expect(library.check_out(book: book2)).to be true
-      expect(library.checked_in?(book: book2)).to be false
+      expect(library.check_out(isbn: book.isbn)).to be true
+      expect(library.checked_in?(isbn: book.isbn)).to be false
       expect(library.checked_in_book_count).to eq 0
     end
   end

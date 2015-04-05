@@ -37,7 +37,7 @@ RSpec.describe Atheneum::API::BookAPI do
         user = User.create!
         bookshelf = Bookshelf.create!(:user => user)
         post '/v1/book/020161622X/scan', {:user_id => user.id, :library_id => library.id}
-        expect(last_response.status).to eq(201)
+         expect(last_response.status).to eq(201)
       end
     end
   end

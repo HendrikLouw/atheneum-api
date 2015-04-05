@@ -5,36 +5,41 @@ module Atheneum
       belongs_to :user
       has_many :books
 
-      def scan(book:, library:)
-        if self.checked_in?(book: book)
-          return check_out(book: book, library: library)
+      def scan(isbn:, library:)
+        if self.checked_in?(isbn: isbn)
+          return check_out(isbn: isbn, library: library)
         else
-          return check_in(book: book, library: library)
+          return check_in(isbn: isbn, library: library)
         end
       end
 
-      def checked_in?(book: )
-        self.books.where(id: book.id).first() != nil
+      def checked_in?(isbn: )
+        self.books.where(isbn: isbn).first() != nil
       end
 
       private
-      def check_in(book: , library: )
-        return false if self.checked_in?(book: book)
+      def check_in(isbn: , library: )
+        return false if self.checked_in?(isbn: isbn)
 
-        if library.checked_in?(book: book)
-          library.check_out(book: book)
+        if library.checked_in?(isbn: isbn)
+          library.check_out(isbn: isbn)
+          book = library.books.find_by_isbn(isbn).first()
           self.books << book
           return self.save
+
         else
-          library.check_in(book: book)
+          library.check_in(isbn: isbn)
           return true
         end
 
       end
 
-      def check_out(book:, library:)
-        library.check_in(book: book)
-        self.books.where(id: book.id).delete
+      def check_out(isbn:, library:)
+        library.check_in(isbn: isbn)
+        book = self.books.find_by_isbn(isbn).first()
+        book.bookshelf = nil
+        book.save!
+
         self.save
       end
     end

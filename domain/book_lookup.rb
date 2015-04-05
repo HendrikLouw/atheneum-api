@@ -2,11 +2,11 @@ module Atheneum
   module Domain
     class BookLookup
       SEARCH_INDEX = 'Books'
-      ID_TYPE = 'ISBN'
+      ID_TYPE = 'EAN'
       ASSOCIATE_TAG='tag'
 
-      def initialize(isbn_code:, lookup_service: initialize_default_lookup_service)
-        @isbn = isbn_code
+      def initialize(isbn:, lookup_service: initialize_default_lookup_service)
+        @isbn = isbn
         @lookup_service = lookup_service
       end
 
@@ -19,7 +19,7 @@ module Atheneum
             'ResponseGroup' => 'Small, Images'
           })
 
-        Atheneum::Model::Book.from_excon_response(raw_product_lookup_response)
+        Atheneum::Model::Book.from_excon_response(raw_product_lookup_response, @isbn)
       end
 
       private
