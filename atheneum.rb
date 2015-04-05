@@ -11,6 +11,7 @@ require_relative './model/user'
 
 require_relative './domain/book_lookup'
 
+require_relative  './api/bookshelf_api'
 require_relative  './api/book_api'
 
 Mongoid.load!(File.dirname(__FILE__) + '/config/mongoid.yml')
