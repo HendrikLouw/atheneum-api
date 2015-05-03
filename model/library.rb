@@ -13,6 +13,7 @@ module Atheneum
       def self.close_to(location:)
         kilometers = 0.1
         radius_kilometer = 111.2
+        location = [location[0].to_f, location[1].to_f]
         lib = Library.geo_near(location).max_distance(kilometers/radius_kilometer)
         lib.first
       end
@@ -53,7 +54,8 @@ module Atheneum
 
       def to_h
         {
-            :name => name
+            :name => name,
+            :location => location
         }
       end
     end

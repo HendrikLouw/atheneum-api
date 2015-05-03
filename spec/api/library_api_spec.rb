@@ -12,7 +12,7 @@ RSpec.describe Atheneum::API::BookshelfAPI do
                           :isbn => "020161622X" }
 
     it "a book from supplied ISBN code" do
-      library = Library.create!(name: "TW Johannesburg")
+      library = Library.create!(name: "TW Johannesburg", location: [-26.19406,28.0358])
 
       VCR.use_cassette("bookshelf_library_setup", :match_requests_on => [:method, :path, :host]) do
         library.check_in(isbn: book.isbn)
@@ -24,6 +24,30 @@ RSpec.describe Atheneum::API::BookshelfAPI do
       get "/v1/library/#{library.id}/checked_in"
       expect(last_response.status).to eq(200)
       expect(JSON.parse(last_response.body)).to eq([JSON.parse(expected_book)])
+
+    end
+  end
+
+  context "POST /v1/library/geo_locate" do
+    it  'should find a library when close to it' do
+      library = Library.create!(name: "TW Johannesburg", location: [-26.19406,28.0358])
+      Library.create_indexes
+
+      post '/v1/library/geo_locate', {location:  [-26.19406,28.0358] }
+
+      expect(last_response.status).to eq(201)
+      expected_library_response = JSON.parse(library.to_json)
+      expected_library_response.delete("_id")
+      expect(JSON.parse(last_response.body)).to eq(expected_library_response)
+    end
+
+    it 'should not find a library when not close to it' do
+      library = Library.create!(name: "TW Johannesburg", location: [-26.19406,28.0358])
+      Library.create_indexes
+
+      post '/v1/library/geo_locate', {location:  [26.19406,28.0358] }
+
+      expect(last_response.status).to eq(404)
 
     end
   end
