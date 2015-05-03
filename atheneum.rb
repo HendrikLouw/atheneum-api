@@ -1,6 +1,7 @@
 require 'vacuum'
 require 'json'
 require 'mongoid'
+require 'mongoid/geospatial'
 
 require_relative './mongoid_ext/array_or_string'
 

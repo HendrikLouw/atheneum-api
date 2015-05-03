@@ -2,8 +2,20 @@ module Atheneum
   module Model
     class Library
       include Mongoid::Document
+      include Mongoid::Geospatial
+
       field :name, :type => String
+      geo_field :location
+
       has_many :books
+
+      # See http://stackoverflow.com/questions/7837731/units-to-use-for-maxdistance-and-mongodb
+      def self.close_to(location:)
+        kilometers = 0.1
+        radius_kilometer = 111.2
+        lib = Library.geo_near(location).max_distance(kilometers/radius_kilometer)
+        lib.first
+      end
 
       def check_in(isbn:)
         book = self.books.find_by_isbn(isbn).first()
