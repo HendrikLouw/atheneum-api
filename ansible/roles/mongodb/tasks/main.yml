@@ -1,0 +1,4 @@
+---
+- name: Install mongoDB
+  apt: name=mongo state=present
+  sudo: yes
